@@ -1,0 +1,27 @@
+%li.wll.commit
+  .right.span2
+    = link_to "View", github_commit_url(@repository, commit.sha), class: 'btn btn-mini', target: :blank
+    - if commit.status == Commit::Status::OPEN || commit.status == Commit::Status::CLOSED
+      = link_to commit.status == Commit::Status::OPEN ? "Claim" : "Reopen", repository_commit_claim_path(@repository, commit.sha), method: :put, class: 'btn btn-mini'
+    - else
+      = link_to "Close", repository_commit_close_path(@repository, commit), method: :put, class: 'btn btn-mini btn-danger'
+  = link_to github_commit_url(@repository, commit.sha) do
+    %p
+      %code.left= commit.sha[0..10]
+      %strong.cgray= commit.author_name
+      &ndash;
+      = image_tag gravatar_icon(commit.author_email), :class => "avatar", :width => 16
+      %span.row_title= truncate(commit.message, :length => 50)
+      %span.right.cgray
+        = time_ago_in_words(commit.committed_at)
+        ago
+        &nbsp;
+    - if commit.status != Commit::Status::OPEN
+      %p
+      %p
+        %span{:class => "left label #{review_label(commit.status)}"}= commit.status
+        - if commit.reviewer
+          %span
+            %strong.cgray= commit.reviewer.email
+            = image_tag gravatar_icon(commit.reviewer.email), :class => "avatar", :width => 16
+  .clearfix
