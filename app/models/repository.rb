@@ -28,7 +28,7 @@ class Repository < ActiveRecord::Base
   def clone_repository
     user = name.split("/", 2).first
     repository_path = Rails.configuration.repository_path
-    `cd #{repository_path}; mkdir #{user}; cd #{user}; git clone https://github.com/#{name}.git`
+    `cd #{repository_path} && mkdir #{user} && cd #{user} && git clone git@github.com:#{user}/#{name}.git`
     Rails.logger.debug(File.join(repository_path, user, name))
     success = File.exists?(File.join(repository_path, name))
     errors.add(:name, :invalid) unless success
