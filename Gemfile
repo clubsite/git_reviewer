@@ -38,3 +38,8 @@ group :test, :development do
   gem 'guard-rspec'
   gem 'guard-rails-assets'
 end
+
+group :deployment do
+  gem 'capistrano'
+  gem 'capistrano_colors'
+end
