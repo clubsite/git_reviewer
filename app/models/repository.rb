@@ -29,7 +29,7 @@ class Repository < ActiveRecord::Base
     user = name.split("/", 2).first
     repository_path = Rails.configuration.repository_path
     Rails.logger.debug('WHOAMI:' + `whoami`)
-    output = `cd #{repository_path} && mkdir #{user} && cd #{user} && git clone git@github.com:#{user}/#{name}.git`
+    output = `cd #{repository_path} && mkdir -p #{user} && cd #{user} && git clone git@github.com:#{user}/#{name}.git`
     Rails.logger.debug(output)
     Rails.logger.debug(File.join(repository_path, user, name))
     success = File.exists?(File.join(repository_path, name))
