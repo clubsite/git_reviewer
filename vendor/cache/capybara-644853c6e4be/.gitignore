@@ -1,0 +1,16 @@
+.idea/
+.DS_Store
+pkg
+tmp
+*~
+*swp
+*gem
+spec.opts
+.rvmrc
+capybara-*.html
+.yardoc
+doc
+.bundle
+Gemfile*.lock
+chromedriver.log
+bundler_stubs
