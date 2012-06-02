@@ -30,9 +30,9 @@ class Repository < ActiveRecord::Base
     repository_path = Rails.configuration.repository_path
     Rails.logger.error('WHOAMI:' + `whoami`)
     status, stdout, stderr = systemu("cd #{repository_path} && mkdir -p #{user} && cd #{user} && git clone git@github.com:#{user}/#{name}.git")
-    Rails.logger.error('git clone status:'+ status)
-    Rails.logger.error('git clone stdout:'+ stdout)
-    Rails.logger.error('git clone stderr:'+ stderr)
+    Rails.logger.error("git clone status: #{status}")
+    Rails.logger.error("git clone stdout: #{stdout}")
+    Rails.logger.error("git clone stderr: #{stderr}")
     Rails.logger.error(File.join(repository_path, user, name))
     success = File.exists?(File.join(repository_path, name))
     errors.add(:name, :invalid) unless success
