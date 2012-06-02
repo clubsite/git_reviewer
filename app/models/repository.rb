@@ -29,7 +29,9 @@ class Repository < ActiveRecord::Base
     user = name.split("/", 2).first
     repository_path = Rails.configuration.repository_path
     Rails.logger.error('WHOAMI:' + `whoami`)
-    status, stdout, stderr = systemu("cd #{repository_path} && mkdir -p #{user} && cd #{user} && git clone git@github.com:#{user}/#{name}.git")
+    clone_cmd = "cd #{repository_path} && mkdir -p #{user} && cd #{user} && git clone git@github.com:#{user}/#{name}.git"
+    Rails.logger.error("executing: #{clone_cmd}")    
+    status, stdout, stderr = systemu(clone_cmd)
     Rails.logger.error("git clone status: #{status}")
     Rails.logger.error("git clone stdout: #{stdout}")
     Rails.logger.error("git clone stderr: #{stderr}")
