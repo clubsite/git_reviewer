@@ -34,7 +34,9 @@ group :test, :development do
   gem 'capybara', :git => 'git://github.com/jnicklas/capybara.git'
   gem 'launchy'
   gem 'database_cleaner'
-  gem 'rb-fsevent', :require => false if RUBY_PLATFORM =~ /darwin/i
+  group :darwin do
+    gem 'rb-fsevent', :require => false #if RUBY_PLATFORM =~ /darwin/i
+  end
   gem 'guard-rspec'
   gem 'guard-rails-assets'
 end
