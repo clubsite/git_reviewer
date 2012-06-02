@@ -28,6 +28,7 @@ gem 'httpclient'
 gem 'grit'
 gem 'kaminari'
 gem 'simple_form'
+gem 'systemu'
 
 group :test, :development do
   gem 'rspec-rails'
