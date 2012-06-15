@@ -6,8 +6,9 @@ class Repository < ActiveRecord::Base
 
   validate :clone_repository
 
-  def sync(name = "origin")
-    repo.remote_fetch(name)
+  def sync(name = "origin", branch = "master")
+    repo.git.reset({:chdir => repo.working_dir, :hard => true}, 'HEAD')
+    repo.git.pull({:chdir => repo.working_dir}, name, branch)
     update_attribute(:last_synced_at, synced_at)
     update_attribute(:synced_at, Time.now)
     new_commits.each do |commit|
@@ -16,7 +17,7 @@ class Repository < ActiveRecord::Base
   end
 
   def new_commits(branch = "master")
-    repo.commits_since(branch, last_synced_at || Time.at(0), until: synced_at)
+    repo.commits_since(branch, last_synced_at || Time.at(0))
   end
 
   private
@@ -30,7 +31,7 @@ class Repository < ActiveRecord::Base
     repository_path = Rails.configuration.repository_path
     Rails.logger.error('WHOAMI:' + `whoami`)
     clone_cmd = "cd #{repository_path} && mkdir -p #{user} && cd #{user} && git clone git@github.com:#{name}.git"
-    Rails.logger.error("executing: #{clone_cmd}")    
+    Rails.logger.error("executing: #{clone_cmd}")
     status, stdout, stderr = systemu(clone_cmd)
     Rails.logger.error("git clone status: #{status}")
     Rails.logger.error("git clone stdout: #{stdout}")

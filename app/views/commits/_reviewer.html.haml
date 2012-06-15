@@ -1,0 +1,7 @@
+%p
+%p
+  %span{:class => "left label #{review_label(commit.status)}"}= commit.status
+  - if commit.reviewer
+    %span
+      %strong.cgray= commit.reviewer.email
+      = image_tag gravatar_icon(commit.reviewer.email), :class => "avatar", :width => 16
