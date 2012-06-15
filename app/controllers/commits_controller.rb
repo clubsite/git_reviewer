@@ -31,6 +31,7 @@ class CommitsController < ApplicationController
   end
 
   def close
+    @repository = Repository.find(params[:repository_id])
     @commit = current_user.commits.find(params[:commit_id])
     @commit.update_attributes(reviewer_id: current_user.id, status: Commit::Status::CLOSED)
     @commit.reload
