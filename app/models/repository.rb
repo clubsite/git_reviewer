@@ -17,7 +17,7 @@ class Repository < ActiveRecord::Base
   end
 
   def new_commits(branch = "master")
-    repo.commits_since(branch, last_synced_at || Time.at(0))
+    repo.commits(branch, false)
   end
 
   private
