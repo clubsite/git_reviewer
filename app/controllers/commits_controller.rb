@@ -13,7 +13,7 @@ class CommitsController < ApplicationController
 
   def show
     @repository = Repository.find(params[:repository_id])
-    @commit = @repository.commits.find_or_create_by_sha(params[:id])
+    @commit = @repository.commits.find_by_sha(params[:id])
   end
 
   def claim
