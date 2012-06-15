@@ -33,7 +33,11 @@ class CommitsController < ApplicationController
   def close
     @commit = current_user.commits.find(params[:commit_id])
     @commit.update_attributes(reviewer_id: current_user.id, status: Commit::Status::CLOSED)
-    respond_with @commit, :location => repository_commits_path(@repository)
+    @commit.reload
+    respond_to do |format|
+      format.html { redirect_to repository_commits_path(@repository) }
+      format.js { render 'claim' }
+    end
   end
 
 end
