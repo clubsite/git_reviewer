@@ -1,0 +1,5 @@
+= link_to "View", github_commit_url(@repository, commit.sha), class: 'btn btn-mini', target: :blank
+- if commit.status == Commit::Status::OPEN || commit.status == Commit::Status::CLOSED
+  = link_to commit.status == Commit::Status::OPEN ? "Claim" : "Reopen", repository_commit_claim_path(@repository, commit.sha), method: :put, class: 'btn btn-mini', remote: true
+- else
+  = link_to "Close", repository_commit_close_path(@repository, commit), method: :put, class: 'btn btn-mini btn-danger', remote: true

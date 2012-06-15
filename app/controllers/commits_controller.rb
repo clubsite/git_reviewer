@@ -26,7 +26,7 @@ class CommitsController < ApplicationController
     @commit.reload
     respond_to do |format|
       format.html { redirect_to repository_commits_path(@repository) }
-      format.js { render 'claim' }
+      format.js { render 'status' }
     end
   end
 
@@ -36,7 +36,7 @@ class CommitsController < ApplicationController
     @commit.reload
     respond_to do |format|
       format.html { redirect_to repository_commits_path(@repository) }
-      format.js { render 'claim' }
+      format.js { render 'status' }
     end
   end
 

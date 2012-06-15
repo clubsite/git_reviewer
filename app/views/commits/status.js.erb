@@ -1,1 +1,2 @@
+$(".links-<%= @commit.id %>").html('<%= escape_javascript(render "links", :commit => @commit) %>')
 $(".reviewer-<%= @commit.id %>").html('<%= escape_javascript(render "reviewer", :commit => @commit) %>')
