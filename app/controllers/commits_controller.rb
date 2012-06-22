@@ -20,9 +20,14 @@ class CommitsController < ApplicationController
     @repository = Repository.find(params[:repository_id])
     @commit = @repository.commits.find_or_create_by_sha(params[:commit_id])
 
-    @repository.commits.
+    rows = @repository.commits.
         where(reviewer_id: [nil, current_user.id], sha: params[:commit_id]).
         update_all(reviewer_id: current_user.id, status: Commit::Status::REVIEWING, updated_at: Time.now)
+    if rows == 0
+      @repository.commits.
+          where(status: Commit::Status::CLOSED, sha: params[:commit_id]).
+          update_all(reviewer_id: current_user.id, status: Commit::Status::REVIEWING, updated_at: Time.now)
+    end
     @commit.reload
     respond_to do |format|
       format.html { redirect_to repository_commits_path(@repository) }
