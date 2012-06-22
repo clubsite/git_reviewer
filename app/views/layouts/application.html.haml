@@ -32,6 +32,7 @@
               - repositories.each do |repository|
                 %li= link_to repository.name, repository_commits_path(repository)
             = link_to "Add", new_repository_path, class: "btn btn-mini"
+          = yield(:side_bar)
         .span9
           = yield
 

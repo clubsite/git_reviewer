@@ -16,6 +16,15 @@ class Repository < ActiveRecord::Base
     end
   end
 
+  def stats_per_week
+    per_week = commits.select([:created_at, :status]).to_a.group_by { |d| d.created_at.to_date.cweek }
+    per_week.collect do |week|
+      number  = week[0]
+      commits = week[1]
+      [number, Hash[commits.group_by { |c| c.status }.map { |w| [w[0].to_sym, w[1].size] }]]
+    end.sort { |a,b| b[0] <=> a[0]}
+  end
+
   def new_commits(branch = "master")
     repo.commits(branch, false)
   end
@@ -27,7 +36,7 @@ class Repository < ActiveRecord::Base
   end
 
   def clone_repository
-    user = name.split("/", 2).first
+    user            = name.split("/", 2).first
     repository_path = Rails.configuration.repository_path
     Rails.logger.error('WHOAMI:' + `whoami`)
     clone_cmd = "cd #{repository_path} && mkdir -p #{user} && cd #{user} && git clone git@github.com:#{name}.git"

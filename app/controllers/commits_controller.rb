@@ -22,7 +22,7 @@ class CommitsController < ApplicationController
 
     @repository.commits.
         where(reviewer_id: [nil, current_user.id], sha: params[:commit_id]).
-        update_all(reviewer_id: current_user.id, status: Commit::Status::REVIEWING)
+        update_all(reviewer_id: current_user.id, status: Commit::Status::REVIEWING, updated_at: Time.now)
     @commit.reload
     respond_to do |format|
       format.html { redirect_to repository_commits_path(@repository) }
