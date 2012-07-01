@@ -1,0 +1,23 @@
+%h1 Listing licenses
+
+%table.table-bordered.table-striped
+  %tr
+    %th Name
+    %th Current version
+    %th License
+    %th Previous version
+    %th Previous license
+    %th
+
+  - @licenses.each do |license|
+    %tr
+      %td= link_to_license(license)
+      %td= license.current_version
+      %td= license.license
+      %td= license.previous_version
+      %td= license.previous_license
+      %td= link_to 'Edit', edit_license_path(license)
+
+%br
+
+= link_to 'New License', new_license_path

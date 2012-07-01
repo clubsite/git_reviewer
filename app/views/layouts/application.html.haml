@@ -20,6 +20,8 @@
           %a.brand(href="#") GitReviewer
           .container.nav-collapse
             %ul.nav
+              %li= link_to "Repositories", root_path
+              %li= link_to "Licenses", licenses_path
               %li= link_to "Sign out", destroy_user_session_path
 
     .container-fluid

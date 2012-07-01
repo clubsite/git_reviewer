@@ -1,0 +1,24 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @license.name
+%p
+  %b Homepage:
+  = @license.homepage
+%p
+  %b Current version:
+  = @license.current_version
+%p
+  %b Previous version:
+  = @license.previous_version
+%p
+  %b License:
+  = @license.license
+%p
+  %b Previous license:
+  = @license.previous_license
+
+= link_to 'Edit', edit_license_path(@license)
+\|
+= link_to 'Back', licenses_path

@@ -8,6 +8,8 @@ GitReviewer::Application.routes.draw do
     end
   end
 
+  resources :licenses
+
   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
 
   root :to => "home#index"

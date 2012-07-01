@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120601101345) do
+ActiveRecord::Schema.define(:version => 20120701091500) do
 
   create_table "commits", :force => true do |t|
     t.string   "sha"
@@ -32,6 +32,17 @@ ActiveRecord::Schema.define(:version => 20120601101345) do
   add_index "commits", ["repository_id", "reviewer_id"], :name => "index_commits_on_repository_id_and_reviewer_id"
   add_index "commits", ["repository_id", "sha"], :name => "index_commits_on_repository_id_and_sha"
   add_index "commits", ["repository_id", "status"], :name => "index_commits_on_repository_id_and_status"
+
+  create_table "licenses", :force => true do |t|
+    t.string   "name"
+    t.string   "homepage"
+    t.string   "current_version"
+    t.string   "previous_version"
+    t.string   "license"
+    t.string   "previous_license"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+  end
 
   create_table "repositories", :force => true do |t|
     t.string   "name"
