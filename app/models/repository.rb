@@ -14,7 +14,9 @@ class Repository < ActiveRecord::Base
     new_commits.each do |commit|
       ::Commit.from_git_commit(commit, repository_id: self.id)
     end
-    License.load_from_gemfile(repo.working_dir)
+    Dir.chdir(repo.working_dir) do
+      License.load_from_gemfile(repo.working_dir)
+    end
   end
 
   def stats_per_week

@@ -2,7 +2,8 @@ class License < ActiveRecord::Base
   attr_accessible :current_version, :homepage, :license, :name, :previous_license, :previous_version
 
   def self.load_from_gemfile(root_path)
-    gemfile     = File.join(root_path, "Gemfile")
+    old_gemfile = ENV['BUNDLE_GEMFILE']
+    gemfile     = ENV['BUNDLE_GEMFILE'] = File.join(root_path, "Gemfile")
     lockfile    = File.join(root_path, "Gemfile.lock")
     definitions = Bundler::Definition.build(gemfile, lockfile, nil)
     definitions.resolve_remotely!
@@ -18,6 +19,7 @@ class License < ActiveRecord::Base
       end
       license.save
     end
+    ENV['BUNDLE_GEMFILE'] = old_gemfile
   end
 
 end
