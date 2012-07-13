@@ -20,21 +20,22 @@
           %a.brand(href="#") GitReviewer
           .container.nav-collapse
             %ul.nav
-              %li= link_to "Repositories", root_path
+              %li= link_to "Repositories", root_path if user_signed_in?
               %li= link_to "Licenses", licenses_path
-              %li= link_to "Sign out", destroy_user_session_path
+              %li= link_to "Sign out", destroy_user_session_path if user_signed_in?
 
     .container-fluid
 
       .row-fluid
         .span3
-          .well.sidebar-nav
-            %ul.nav.nav-list
-              %li.nav-header Repositories
-              - repositories.each do |repository|
-                %li= link_to repository.name, repository_commits_path(repository)
-            = link_to "Add", new_repository_path, class: "btn btn-mini"
-          = yield(:side_bar)
+          - if user_signed_in?
+            .well.sidebar-nav
+              %ul.nav.nav-list
+                %li.nav-header Repositories
+                - repositories.each do |repository|
+                  %li= link_to repository.name, repository_commits_path(repository)
+              = link_to "Add", new_repository_path, class: "btn btn-mini"
+            = yield(:side_bar)
         .span9
           = yield
 

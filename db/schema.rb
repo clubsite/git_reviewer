@@ -13,6 +13,20 @@
 
 ActiveRecord::Schema.define(:version => 20120701091500) do
 
+  create_table "changed_files", :force => true do |t|
+    t.integer  "compare_id"
+    t.string   "file_name"
+    t.string   "sha"
+    t.integer  "reviewer_id"
+    t.string   "status"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "changed_files", ["compare_id"], :name => "index_changed_files_on_compare_id"
+  add_index "changed_files", ["reviewer_id"], :name => "index_changed_files_on_reviewer_id"
+  add_index "changed_files", ["status"], :name => "index_changed_files_on_status"
+
   create_table "commits", :force => true do |t|
     t.string   "sha"
     t.integer  "repository_id"
@@ -32,6 +46,16 @@ ActiveRecord::Schema.define(:version => 20120701091500) do
   add_index "commits", ["repository_id", "reviewer_id"], :name => "index_commits_on_repository_id_and_reviewer_id"
   add_index "commits", ["repository_id", "sha"], :name => "index_commits_on_repository_id_and_sha"
   add_index "commits", ["repository_id", "status"], :name => "index_commits_on_repository_id_and_status"
+
+  create_table "compares", :force => true do |t|
+    t.integer  "repository_id"
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  add_index "compares", ["repository_id"], :name => "index_compares_on_repository_id"
 
   create_table "licenses", :force => true do |t|
     t.string   "name"

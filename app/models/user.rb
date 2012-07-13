@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
   has_many :repositories
   has_many :commits, foreign_key: "reviewer_id"
 
-  devise :database_authenticatable, :registerable,
+  devise :database_authenticatable,
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable
 
   attr_accessible :email, :password, :password_confirmation, :remember_me
@@ -13,8 +13,8 @@ class User < ActiveRecord::Base
     data = access_token.info
     if user = self.find_by_email(data.email)
       user
-    else # Create a user with a stub password.
-      self.create(email: data.email, :password => Devise.friendly_token[0, 20])
+    else # return a new user
+      User.new
     end
   end
 

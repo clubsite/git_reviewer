@@ -16,8 +16,8 @@
       %td= license.license
       %td= license.previous_version
       %td= license.previous_license
-      %td= link_to 'Edit', edit_license_path(license)
+      %td= link_to 'Edit', edit_license_path(license) if user_signed_in?
 
 %br
 
-= link_to 'New License', new_license_path
+= link_to 'New License', new_license_path if user_signed_in?
