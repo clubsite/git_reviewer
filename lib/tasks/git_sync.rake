@@ -4,8 +4,12 @@ namespace :git_reviewer do
     puts "Start syncing"
     Repository.all.each do |repository|
       puts "[Repository ##{repository.name}] Sync start"
-      repository.sync
-      puts "[Repository ##{repository.name}] Sync finished"
+      begin
+        repository.sync
+        puts "[Repository ##{repository.name}] Sync finished"
+      rescue Exception => e
+        puts "[Repository ##{repository.name}] Sync failed: #{e.message}"
+      end
     end
   end
 end

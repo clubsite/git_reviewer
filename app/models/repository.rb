@@ -15,7 +15,7 @@ class Repository < ActiveRecord::Base
       ::Commit.from_git_commit(commit, repository_id: self.id)
     end
 
-    License.load_from_gemfile(repo.working_dir)
+    License.load_from_gemfile(repo.working_dir) if File.exists?(File.join(repo.working_dir, "Gemfile"))
   end
 
   def stats_per_week
