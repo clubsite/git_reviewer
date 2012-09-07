@@ -29,3 +29,9 @@ namespace :deploy do
       run "mkdir -p #{shared_path}/repos && ln -nfs #{shared_path}/repos #{current_path}/repos"
    end
 end
+
+namespace :repo do
+  task :sync, :roles => :app do
+    run "cd #{latest_release} && #{rake} RAILS_ENV=production git_reviewer:sync"
+  end
+end
