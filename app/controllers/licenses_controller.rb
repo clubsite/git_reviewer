@@ -3,7 +3,7 @@ class LicensesController < ApplicationController
   # GET /licenses
   # GET /licenses.xml
   def index
-    @licenses = License.order(:updated_at, :name)
+    @licenses = License.order("updated_at DESC, name ASC")
     respond_with(@licenses)
   end
 
