@@ -7,6 +7,7 @@
     %th License
     %th Previous version
     %th Previous license
+    %th State
     %th
 
   - @licenses.each do |license|
@@ -16,6 +17,13 @@
       %td= license.license
       %td= license.previous_version
       %td= license.previous_license
+      %td
+        - if license.updated_at > Time.now - 8.days
+          %span.label.label-success Active
+        - elsif license.updated_at > Time.now - 16.days
+          %span.label.label-warning Inactive
+        - elsif license.updated_at < Time.now - 16.days
+          %span.label Unused
       %td= link_to 'Edit', edit_license_path(license) if user_signed_in?
 
 %br

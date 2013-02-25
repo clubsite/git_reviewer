@@ -31,6 +31,7 @@ namespace :deploy do
 end
 
 namespace :repo do
+  desc "Sync repositories"
   task :sync, :roles => :app do
     run "cd #{latest_release} && #{rake} RAILS_ENV=production git_reviewer:sync"
   end
