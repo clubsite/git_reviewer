@@ -9,14 +9,15 @@ class License < ActiveRecord::Base
     definitions.resolve_remotely!
 
     definitions.specs.each do |spec|
-      license          = License.find_or_initialize_by_name(spec.name)
+      license = License.find_or_initialize_by_name(spec.name)
       license.homepage = spec.homepage if spec.homepage
       if license.current_version != spec.version.to_s
         license.previous_version = license.current_version.dup if license.current_version
         license.previous_license = license.license.dup if license.license
-        license.current_version  = spec.version.to_s
-        license.license          = spec.license
+        license.current_version = spec.version.to_s
+        license.license         = spec.license
       end
+      license.updated_at = Time.now
       license.save
     end
     ENV['BUNDLE_GEMFILE'] = old_gemfile
