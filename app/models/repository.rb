@@ -11,9 +11,9 @@ class Repository < ActiveRecord::Base
     repo.git.pull({:chdir => repo.working_dir}, name, branch)
     update_attribute(:last_synced_at, synced_at)
     update_attribute(:synced_at, Time.now)
-    new_commits.each do |commit|
-      ::Commit.from_git_commit(commit, repository_id: self.id)
-    end
+    # new_commits.each do |commit|
+      # ::Commit.from_git_commit(commit, repository_id: self.id)
+    # end
 
     License.load_from_gemfile(repo.working_dir) if File.exists?(File.join(repo.working_dir, "Gemfile"))
   end
